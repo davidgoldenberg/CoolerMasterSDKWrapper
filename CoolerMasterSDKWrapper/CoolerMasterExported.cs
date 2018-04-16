@@ -1,18 +1,83 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace CoolerMasterSDKWrapper
 {
-    /*
+    /*  column/key assignments per the spreadsheet offered by coolermaster
 US Layout, MasterKeys Pro L(MK750), Row or Column with 7 * 24 / by each																								
-Index	0	        1	        2	    3	    4	    5	    6	    7	    8	    9	    10      11	    12	    13	    14	        15	        16	            17	        18	    19	    20	    21	    22	        23
-0	    ESC	        F1	        F2	    F3	    F4	 	        F5	    F6	    F7	    F8	 	        F9	    F10	    F11	    F12	        Snapshot    "ScrollLock"	Pause	    P1	    P2	    P3	    P4	    EX_LED 1	EX_LED 23
-1	    `	        1	        2	    3	    4	    5	    6	    7	    8	    9	    0	    -	    =		        Backspace	Insert	    Home	        PageUp	    Numlock	(/)	    (*)	    (-)	    EX_LED 2	EX_LED 24
-2	    Tab	        Q	        W	    E	    R	    T	    Y	    U	    I	    O	    P	    [	    ]		        \	        Delete	    End	            PageDown	(7)	    (8)	    (9)	    (+)	    EX_LED 3	EX_LED 25
-3	    CapsLock	A	        S	D	F	G	H	J	K	L	;	'			Enter				(4)	(5)	(6)		EX_LED 4	EX_LED 26
-4	    LShift		            Z	X	C	V	B	N	M	,	.	/			Rshift		Up		(1)	(2)	(3)	(Enter)		
-5	    LCtrl	    LWin	    LAlt				            Space				            RAlt	RWin	App		        RCtrl	    Left	    Down	        Right	    (0)		        (.)			
-6	    EX_LED 5	EX_LED 6	EX_LED 7	EX_LED 8	EX_LED 9	EX_LED 10	EX_LED 11	EX_LED 12	EX_LED 13	EX_LED 14	EX_LED 15	EX_LED 16	EX_LED 17	EX_LED 18	EX_LED 19	EX_LED 20	EX_LED 21	EX_LED 22						
+Index	0	        1	        2	        3	        4	        5	        6	        7	        8	        9	        10          11  	    12	        13	        14	        15	        16	            17	        18	    19	    20	    21	    22	        23
+0	    ESC	        F1	        F2	        F3	        F4	 	                F5	        F6	        F7	        F8	 	                F9	        F10	        F11	        F12	        Snapshot    "ScrollLock"	Pause	    P1	    P2	    P3	    P4	    EX_LED 1	EX_LED 23
+1	    `	        1	        2	        3	        4	        5	        6	        7	        8	        9	        0	        -	        =		                Backspace	Insert	    Home	        PageUp	    Numlock	(/)	    (*)	    (-)	    EX_LED 2	EX_LED 24
+2	    Tab	        Q	        W	        E	        R	        T	        Y	        U	        I	        O	        P	        [	        ]		                \	        Delete	    End	            PageDown	(7)	    (8)	    (9)	    (+)	    EX_LED 3	EX_LED 25
+3	    CapsLock	A	        S	        D	        F	        G	        H   	    J	        K	        L	        ;	        '			                        Enter				                                (4)	    (5)	    (6)		        EX_LED 4	EX_LED 26
+4	    LShift		            Z	        X	        C	        V	        B	        N	        M	        ,	        .	        /			                        Rshift		            Up		                    (1)	    (2)	    (3)	    (Enter)		
+5	    LCtrl	    LWin	    LAlt				                Space				                                        RAlt	    RWin	    App		                RCtrl	    Left	    Down	        Right	    (0)		        (.)			
+6	    EX_LED 5	EX_LED 6	EX_LED 7	EX_LED 8	EX_LED 9	EX_LED 10	EX_LED 11	EX_LED 12	EX_LED 13	EX_LED 14	EX_LED 15	EX_LED 16	EX_LED 17	EX_LED 18	EX_LED 19	EX_LED 20	EX_LED 21	    EX_LED 22						
 */
+
+    public struct Key
+    {
+        public static Dictionary<char, Key> Keys = new Dictionary<char, Key>
+        {
+            { ' ', new Key(5,5)},
+            { 'z', new Key(4,2)},
+            { 'x', new Key(4,3)},
+            { 'c', new Key(4,4)},
+            { 'v', new Key(4,5)},
+            { 'b', new Key(4,6)},
+            { 'n', new Key(4,7)},
+            { 'm', new Key(4,8)},
+            { ',', new Key(4,9)},
+            { '.', new Key(4,10)},
+            { '/', new Key(4,11)},
+            { 'a', new Key(3,2)},
+            { 's', new Key(3,3)},
+            { 'd', new Key(3,4)},
+            { 'f', new Key(3,5)},
+            { 'g', new Key(3,6)},
+            { 'h', new Key(3,7)},
+            { 'j', new Key(3,8)},
+            { 'k', new Key(3,9)},
+            { 'l', new Key(3,10)},
+            { ';', new Key(3,11)},
+            { '\'', new Key(3,12)}, // not lighting up as expected
+            { 'q', new Key(2,2)},
+            { 'w', new Key(2,3)},
+            { 'e', new Key(2,4)},
+            { 'r', new Key(2,5)},
+            { 't', new Key(2,6)},
+            { 'y', new Key(2,7)},
+            { 'u', new Key(2,8)},
+            { 'i', new Key(2,9)},
+            { 'o', new Key(2,10)},
+            { 'p', new Key(2,11)},
+            { '[', new Key(2,12)},
+            { ']', new Key(2,13)}, // not in the right row?
+            { '\\', new Key(2,14)}, // not in the right row?
+            { '1', new Key(1,1)},
+            { '2', new Key(1,2)},
+            { '3', new Key(1,3)},
+            { '4', new Key(1,4)},
+            { '5', new Key(1,5)},
+            { '6', new Key(1,6)},
+            { '7', new Key(1,7)},
+            { '8', new Key(1,8)},
+            { '9', new Key(1,9)},
+            { '0', new Key(1,10)},
+            { '_', new Key(1,11)},
+        };
+
+        public Key(byte r, byte c)
+        {
+            Row = r;
+            Column = c;
+        }
+
+        public byte Column { get; private set; }
+        public byte Row { get; private set; }
+    }
+
+    
     public struct KEY_COLOR
     {
         /// <summary>
@@ -36,11 +101,13 @@ Index	0	        1	        2	    3	    4	    5	    6	    7	    8	    9	    10    
     };
 
     //  set up/save the whole LED color structure
+    [StructLayout(LayoutKind.Sequential)]
     public struct COLOR_MATRIX
     {
         public const int MAX_LED_ROW = 7;
         public const int MAX_LED_COLUMN = 24;
-        public KEY_COLOR[][] KeyColor;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst=168)]
+        public KEY_COLOR[,] KeyColor;
     }
 
     /// <summary>
@@ -67,7 +134,7 @@ Index	0	        1	        2	    3	    4	    5	    6	    7	    8	    9	    10    
         /// Obtain current system time
         /// </summary>
         /// <returns>format is %Y %m/%d %H:%M %S</returns>
-        [DllImport("SDKDLL.dll", CharSet = CharSet.Auto)]
+        [DllImport("SDKDLL.dll", CharSet = CharSet.Auto)] // blowing up, probably not mapping the return value back form native correctly
         public static extern string GetNowTime();
 
         /// <summary>
